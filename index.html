@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlayBox – Original Online Games</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      text-align: center;
+    }
+    header {
+      padding: 20px;
+      background: #020617;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    header h1 { margin: 0; }
+    .games {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+    .card {
+      background: #020617;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #38bdf8;
+      color: #020617;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover { background: #0ea5e9; }
+    canvas {
+      background: #020617;
+      border-radius: 8px;
+      display: block;
+      margin: 10px auto;
+    }
+    footer {
+      padding: 15px;
+      background: #020617;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎮 PlayBox</h1>
+    <p>Original browser games – no downloads</p>
+  </header>
+
+  <section class="games">
+    <div class="card">
+      <h2>🎯 Click Rush</h2>
+      <p>Click the box as many times as you can in 10 seconds.</p>
+      <p id="clickScore">Score: 0</p>
+      <button onclick="startClickRush()">Start</button>
+    </div>
+
+    <div class="card">
+      <h2>🧠 Number Guess</h2>
+      <p>Guess the secret number (1–100).</p>
+      <input id="guessInput" type="number" placeholder="Your guess" />
+      <button onclick="checkGuess()">Guess</button>
+      <p id="guessResult"></p>
+    </div>
+
+    <div class="card">
+      <h2>🏓 Mini Pong</h2>
+      <p>Move your paddle with your finger or mouse.</p>
+      <canvas id="pong" width="260" height="160"></canvas>
+      <button onclick="startPong()">Play</button>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 PlayBox – Original Web Games
+  </footer>
+
+<script>
+// Click Rush
+let clickScore = 0;
+let clickActive = false;
+function startClickRush() {
+  clickScore = 0;
+  clickActive = true;
+  document.getElementById('clickScore').innerText = 'Score: 0';
+  const btn = document.createElement('button');
+  btn.innerText = 'CLICK!';
+  btn.onclick = () => {
+    if (clickActive) {
+      clickScore++;
+      document.getElementById('clickScore').innerText = 'Score: ' + clickScore;
+    }
+  };
+  document.querySelector('.card').appendChild(btn);
+  setTimeout(() => {
+    clickActive = false;
+    btn.remove();
+    alert('Time! Final score: ' + clickScore);
+  }, 10000);
+}
+
+// Number Guess
+const secret = Math.floor(Math.random() * 100) + 1;
+function checkGuess() {
+  const val = Number(document.getElementById('guessInput').value);
+  const result = document.getElementById('guessResult');
+  if (val === secret) result.innerText = '🎉 Correct!';
+  else if (val > secret) result.innerText = 'Too high!';
+  else result.innerText = 'Too low!';
+}
+
+// Mini Pong
+let pongInterval;
+function startPong() {
+  const canvas = document.getElementById('pong');
+  const ctx = canvas.getContext('2d');
+  let paddleY = canvas.height / 2 - 20;
+  let ballX = canvas.width / 2;
+  let ballY = canvas.height / 2;
+  let dx = 2, dy = 2;
+
+  canvas.onmousemove = e => {
+    const rect = canvas.getBoundingClientRect();
+    paddleY = e.clientY - rect.top - 20;
+  };
+
+  clearInterval(pongInterval);
+  pongInterval = setInterval(() => {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillRect(10, paddleY, 6, 40);
+    ctx.beginPath();
+    ctx.arc(ballX, ballY, 4, 0, Math.PI*2);
+    ctx.fill();
+    ballX += dx; ballY += dy;
+    if (ballY < 0 || ballY > canvas.height) dy *= -1;
+    if (ballX < 16 && ballY > paddleY && ballY < paddleY + 40) dx *= -1;
+    if (ballX > canvas.width) { ballX = canvas.width/2; }
+  }, 16);
+}
+</script>
+</body>
+</html>
