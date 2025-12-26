@@ -15,19 +15,27 @@ footer{padding:20px}
 </style>
 </head>
 <body>
+
 <header>
 <h1>🔥🏀 67 Unblocked</h1>
 <p>Play unblocked browser games instantly!</p>
 </header>
+
 <section class="games">
 
+<!-- Existing games -->
 <div class="card"><h2>🎯 Click Rush</h2><p id="crScore">Score: 0</p><button onclick="startGame('clickrush')">Play</button></div>
 <div class="card"><h2>⚡ Reaction Test</h2><p id="reactionResult"></p><button onclick="startGame('reaction')">Play</button></div>
 <div class="card"><h2>🏓 Mini Pong</h2><canvas id="pong" width="260" height="160"></canvas><br><button onclick="startGame('pong')">Play</button></div>
 <div class="card"><h2>🏀 Street Dunk Duel</h2><canvas id="dunk" width="260" height="160"></canvas><p id="dunkScore">Score: 0</p><button onclick="startGame('dunk')">Play</button></div>
 <div class="card"><h2>⚽ Bobble Soccer</h2><canvas id="soccer" width="260" height="160"></canvas><p id="soccerScore">Score: 0</p><button onclick="startGame('soccer')">Play</button></div>
 
+<!-- New games -->
+<div class="card"><h2>🏀 BasketBros</h2><canvas id="basketbros" width="260" height="160"></canvas><p id="basketbrosScore">Score: 0</p><button onclick="startGame('basketbros')">Play</button></div>
+<div class="card"><h2>⚽ Bobble Head Soccer</h2><canvas id="bobblehead" width="260" height="160"></canvas><p id="bobbleheadScore">Score: 0</p><button onclick="startGame('bobblehead')">Play</button></div>
+
 </section>
+
 <button onclick="toggleFullscreen()" style="position:fixed;bottom:20px;right:20px">⛶</button>
 <footer><button onclick="showScores()">🏆 High Scores</button><br>© 2025 67 Unblocked 🔥🏀</footer>
 
@@ -43,102 +51,40 @@ function toggleFullscreen(){if(!document.fullscreenElement){document.documentEle
 // ---------- Game Management ----------
 let activeGame=null;
 function startGame(name){if(activeGame){cancelAnimationFrame(activeGame.raf); activeGame=null;}
- switch(name){
-  case 'clickrush': initClickRush(); break;
-  case 'reaction': initReaction(); break;
-  case 'pong': initPong(); break;
-  case 'dunk': initDunk(); break;
-  case 'soccer': initSoccer(); break;
- }}
+switch(name){
+case 'clickrush': initClickRush(); break;
+case 'reaction': initReaction(); break;
+case 'pong': initPong(); break;
+case 'dunk': initDunk(); break;
+case 'soccer': initSoccer(); break;
+case 'basketbros': initBasketBros(); break;
+case 'bobblehead': initBobbleHead(); break;
+}}
 
 // ---------- Click Rush ----------
-function initClickRush(){
- let cr=0, crActive=true;
- document.getElementById('crScore').innerText='Score: 0';
- let end=Date.now()+10000;
- document.onclick=function(){if(crActive){cr++;document.getElementById('crScore').innerText='Score: '+cr;if(Date.now()>end){crActive=false;saveScore('Click Rush',cr);alert('Time! Score: '+cr);document.onclick=null;}}};
-}
+function initClickRush(){let cr=0,crActive=true;document.getElementById('crScore').innerText='Score: 0';
+let end=Date.now()+10000;document.onclick=function(){if(crActive){cr++;document.getElementById('crScore').innerText='Score: '+cr;if(Date.now()>end){crActive=false;saveScore('Click Rush',cr);alert('Time! Score: '+cr);document.onclick=null;}}};}
 
 // ---------- Reaction ----------
-function initReaction(){
- let out=document.getElementById('reactionResult');
- out.innerText='Wait...';
- let t=Math.random()*3000+1000;
- setTimeout(()=>{let start=Date.now();document.body.style.background='#16a34a';document.body.onclick=()=>{let r=Date.now()-start;document.body.style.background='#0f172a';out.innerText='Reaction: '+r+'ms';saveScore('Reaction',Math.max(0,5000-r));document.body.onclick=null;};},t);
-}
+function initReaction(){let out=document.getElementById('reactionResult');out.innerText='Wait...';let t=Math.random()*3000+1000;
+setTimeout(()=>{let start=Date.now();document.body.style.background='#16a34a';document.body.onclick=()=>{let r=Date.now()-start;document.body.style.background='#0f172a';out.innerText='Reaction: '+r+'ms';saveScore('Reaction',Math.max(0,5000-r));document.body.onclick=null;};},t);}
 
 // ---------- Mini Pong ----------
-function initPong(){
- let c=document.getElementById('pong'),x=c.getContext('2d');
- let py=60,bx=130,by=80,dx=2,dy=2;
- c.onmousemove=e=>py=e.offsetY-20;
- function loop(){
- x.clearRect(0,0,260,160);
- x.fillRect(10,py,6,40);
- bx+=dx; by+=dy;
- if(by<0||by>160)dy*=-1;
- if(bx<16&&by>py&&by<py+40)dx*=-1;
- if(bx>260){bx=130;by=80;}
- x.beginPath(); x.arc(bx,by,4,0,7); x.fill();
- activeGame.raf=requestAnimationFrame(loop);
- }
- activeGame={raf:null}; loop();
-}
+function initPong(){let c=document.getElementById('pong'),x=c.getContext('2d');let py=60,bx=130,by=80,dx=2,dy=2;c.onmousemove=e=>py=e.offsetY-20;
+function loop(){x.clearRect(0,0,260,160);x.fillRect(10,py,6,40);bx+=dx;by+=dy;if(by<0||by>160)dy*=-1;if(bx<16&&by>py&&by<py+40)dx*=-1;if(bx>260){bx=130;by=80;}x.beginPath();x.arc(bx,by,4,0,7);x.fill();activeGame.raf=requestAnimationFrame(loop);}
+activeGame={raf:null}; loop();}
 
 // ---------- Street Dunk Duel ----------
-function initDunk(){
- let c=document.getElementById('dunk'),x=c.getContext('2d');
- let y=110,v=0,by=0,score=0;
- c.onclick=()=>v=-6;
- function loop(){
- x.clearRect(0,0,260,160);
- v+=0.4;y+=v;if(y>110){y=110;v=0}
- by+=2;if(by>160){by=0}
- if(Math.abs(by-y)<10){score++;saveScore('Dunk',score);by=0}
- x.fillRect(40,y,20,30);
- x.beginPath();x.arc(130,by,6,0,7);x.fill();
- document.getElementById('dunkScore').innerText='Score: '+score;
- activeGame.raf=requestAnimationFrame(loop);
- }
- activeGame={raf:null}; loop();
-}
+function initDunk(){let c=document.getElementById('dunk'),x=c.getContext('2d');let y=110,v=0,by=0,score=0;c.onclick=()=>v=-6;function loop(){x.clearRect(0,0,260,160);v+=0.4;y+=v;if(y>110){y=110;v=0}by+=2;if(by>160){by=0}if(Math.abs(by-y)<10){score++;saveScore('Dunk',score);by=0}x.fillRect(40,y,20,30);x.beginPath();x.arc(130,by,6,0,7);x.fill();document.getElementById('dunkScore').innerText='Score: '+score;activeGame.raf=requestAnimationFrame(loop);}activeGame={raf:null};loop();}
 
 // ---------- Bobble Soccer ----------
-function initSoccer(){
- let c=document.getElementById('soccer'),x=c.getContext('2d');
- let py=70,ai=70,bx=130,by=80,dx=2,dy=1;
- function loop(){
- x.clearRect(0,0,260,160);
- by+=dy; bx+=dx;
- if(by<0||by>160)dy*=-1;
- if(bx<20&&Math.abs(by-py)<20)dx*=-1;
- ai+=((by-ai)*0.05);
- if(bx>240&&Math.abs(by-ai)<20)dx*=-1;
- if(bx<0||bx>260){bx=130;by=80;}
- x.beginPath(); x.arc(15,py,14,0,7); x.arc(245,ai,14,0,7); x.fill();
- x.beginPath(); x.arc(bx,by,5,0,7); x.fill();
- document.getElementById('soccerScore').innerText='Score: '+Math.floor(bx);
- activeGame.raf=requestAnimationFrame(loop);
- }
- activeGame={raf:null}; loop();
-}
+function initSoccer(){let c=document.getElementById('soccer'),x=c.getContext('2d');let py=70,ai=70,bx=130,by=80,dx=2,dy=1;function loop(){x.clearRect(0,0,260,160);by+=dy;bx+=dx;if(by<0||by>160)dy*=-1;if(bx<20&&Math.abs(by-py)<20)dx*=-1;ai+=((by-ai)*0.05);if(bx>240&&Math.abs(by-ai)<20)dx*=-1;if(bx<0||bx>260){bx=130;by=80;}x.beginPath();x.arc(15,py,14,0,7);x.arc(245,ai,14,0,7);x.fill();x.beginPath();x.arc(bx,by,5,0,7);x.fill();document.getElementById('soccerScore').innerText='Score: '+Math.floor(bx);activeGame.raf=requestAnimationFrame(loop);}activeGame={raf:null};loop();}
+
+// ---------- BasketBros ----------
+function initBasketBros(){let c=document.getElementById('basketbros'),x=c.getContext('2d');let y=110,v=0,ballX=130,ballY=80,dx=3,dy=2,score=0;c.onclick=()=>v=-6;function loop(){x.clearRect(0,0,260,160);v+=0.3;y+=v;if(y>110){y=110;v=0}ballX+=dx;ballY+=dy;if(ballY<0||ballY>160)dy*=-1;if(Math.abs(ballY-y)<10&&ballX>50&&ballX<70){score++;saveScore('BasketBros',score);ballX=130;ballY=80;}x.fillRect(50,y,20,30);x.beginPath();x.arc(ballX,ballY,6,0,7);x.fill();document.getElementById('basketbrosScore').innerText='Score: '+score;activeGame.raf=requestAnimationFrame(loop);}activeGame={raf:null};loop();}
+
+// ---------- Bobble Head Soccer ----------
+function initBobbleHead(){let c=document.getElementById('bobblehead'),x=c.getContext('2d');let py=70,ai=70,ballX=130,ballY=80,dx=2,dy=1,score=0;c.onmousemove=e=>py=e.offsetY-20;function loop(){x.clearRect(0,0,260,160);ballX+=dx;ballY+=dy;if(ballY<0||ballY>160)dy*=-1;if(ballX<20&&Math.abs(ballY-py)<20)dx*=-1;ai+=((ballY-ai)*0.05);if(ballX>240&&Math.abs(ballY-ai)<20)dx*=-1;if(ballX<0||ballX>260){ballX=130;ballY=80;}x.beginPath();x.arc(15,py,14,0,7);x.arc(245,ai,14,0,7);x.fill();x.beginPath();x.arc(ballX,ballY,5,0,7);x.fill();document.getElementById('bobbleheadScore').innerText='Score: '+Math.floor(ballX);activeGame.raf=requestAnimationFrame(loop);}activeGame={raf:null};loop();}
 </script>
 </body>
 </html>
-```
-
----
-
-### ✅ What’s improved
-1. **Only one game runs at a time** → prevents CPU overload.
-2. **`requestAnimationFrame`** for smooth animations.
-3. **Lazy initialization** → canvases only start when you click Play.
-4. **High scores** preserved.
-5. **Fullscreen button** works.
-6. Works **instantly on mobile** without long loading.
-
----
-
-If you want, I can also **add sound effects for each game** into this same optimized code — it will **not slow the page down**.  
-
-Do you want me to do that next?
