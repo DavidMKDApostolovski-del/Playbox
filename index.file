@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>67 Unblocked 🔥🏀</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      text-align: center;
+    }
+    header {
+      padding: 20px;
+      background: #020617;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    header h1 { margin: 0; }
+    .games {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+    .card {
+      background: #020617;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #38bdf8;
+      color: #020617;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover { background: #0ea5e9; }
+    canvas {
+      background: #020617;
+      border-radius: 8px;
+      display: block;
+      margin: 10px auto;
+    }
+    footer {
+      padding: 15px;
+      background: #020617;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔥🏀 67 Unblocked</h1>
+    <p>Unblocked browser games you can play anywhere</p>
+  </header>
+
+  <section class="games">
+
+  <div class="card"><h2>🏃 Slope Runner</h2><p>Endless downhill runner.</p><button onclick="alert('Slope Runner loading… (next physics update)')">Play</button></div>
+
+  <div class="card"><h2>🔫 Top‑Down Shooter</h2><p>Survive waves of enemies.</p><button onclick="alert('Shooter mode coming online!')">Play</button></div>
+
+  <div class="card"><h2>🏎️ Mini Racer</h2><p>Dodge cars and survive.</p><button onclick="alert('Racing engine loading…')">Play</button></div>
+
+  <div class="card"><h2>🏀 1v1 Hoops</h2><p>Basketball duel vs AI.</p><button onclick="alert('1v1 Basketball starting soon!')">Play</button></div>
+
+  <div class="card"><h2>⚽ Soccer Tournament</h2><p>Win matches, climb the ladder.</p><button onclick="alert('Tournament mode coming!')">Play</button></div>
+
+  <div class="card"><h2>🏆 High Scores</h2><p>Compete for the top spot.</p><button onclick="alert('Scoreboard enabled next update')">View</button></div>
+
+
+  <div class="card">
+    <h2>🏀 Street Dunk Duel</h2>
+    <p>BasketBros-style ORIGINAL game. Jump, dunk, score!</p>
+    <canvas id="dunk" width="260" height="160"></canvas>
+    <button onclick="startDunk()">Play</button>
+  </div>
+
+  <div class="card">
+    <h2>⚽ Bobble Soccer Stars</h2>
+    <p>Big heads, tiny bodies, chaotic goals.</p>
+    <canvas id="soccer" width="260" height="160"></canvas>
+    <button onclick="startSoccer()">Play</button>
+  </div>
+
+  <div class="card">
+    <h2>⚡ Reaction Test</h2>
+    <p>Tap when the screen turns green.</p>
+    <button onclick="reactionStart()">Start</button>
+    <p id="reactionResult"></p>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Click Rush</h2>
+    <p>Click as fast as possible in 10 seconds.</p>
+    <p id="clickScore">Score: 0</p>
+    <button onclick="startClickRush()">Start</button>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Number Guess</h2>
+    <p>Guess the number (1–100).</p>
+    <input id="guessInput" type="number" />
+    <button onclick="checkGuess()">Guess</button>
+    <p id="guessResult"></p>
+  </div>
+
+  <div class="card">
+    <h2>🏓 Mini Pong</h2>
+    <canvas id="pong" width="260" height="160"></canvas>
+    <button onclick="startPong()">Play</button>
+  </div>
+
+  <div class="card">
+    <h2>🏀 Basket Flick</h2>
+    <p>Tap to shoot hoops.</p>
+    <button onclick="basketScore++ ; document.getElementById('basketScore').innerText='Score: '+basketScore">Shoot</button>
+    <p id="basketScore">Score: 0</p>
+  </div>
+
+  <div class="card">
+    <h2>🚀 Space Dodge</h2>
+    <p>Tap to dodge asteroids.</p>
+    <button onclick="alert('Asteroids dodged! You win 🚀')">Play</button>
+  </div>
+
+  <div class="card">
+    <h2>🧩 Memory Tiles</h2>
+    <p>Train your memory.</p>
+    <button onclick="alert('Memory mode coming soon!')">Play</button>
+  </div>
+
+</section>
+
+  <button onclick="toggleFullscreen()" style="position:fixed;bottom:20px;right:20px;padding:12px;border-radius:50%;font-size:18px">⛶</button>
+<audio id="clickSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+<audio id="scoreSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+<footer>
+<button onclick="showScores()">🏆 View High Scores</button>
+<br/>© 2025 67 Unblocked 🔥🏀
+</footer>
+
+<script>
+// High Scores (localStorage)
+let highscores = JSON.parse(localStorage.getItem('highscores')) || {};
+function saveScore(game, score){
+  if(!highscores[game] || score > highscores[game]){
+    highscores[game] = score;
+    localStorage.setItem('highscores', JSON.stringify(highscores));
+    alert('🏆 New High Score: ' + score);
+  }
+}
+function showScores(){
+  let msg='🏆 High Scores
+';
+  for(const g in highscores){msg+=`${g}: ${highscores[g]}
+`;}
+  alert(msg || 'No scores yet');
+}
+
+function toggleFullscreen(){
+  if(!document.fullscreenElement){document.documentElement.requestFullscreen();}
+  else{document.exitFullscreen();}
+}
+
+// Street Dunk Duel (original)
+let dunkInt;
+function startDunk(){
+  const c=document.getElementById('dunk'); const x=c.getContext('2d');
+  let pY=110,bX=130,bY=20,v=0,score=0;
+  c.onclick=()=>v=-6;
+  clearInterval(dunkInt);
+  dunkInt=setInterval(()=>{
+    x.clearRect(0,0,c.width,c.height);
+    v+=0.4; pY+=v; if(pY>110){pY=110;v=0}
+    bY+=2; if(bY>150){bY=20; bX=Math.random()*200+30}
+    if(Math.abs(bX-40)<15 && Math.abs(bY-pY)<15){score++; bY=20}
+    x.fillStyle='#38bdf8'; x.fillRect(30,pY,20,30);
+    x.beginPath(); x.arc(bX,bY,6,0,7); x.fill();
+    x.fillText('Score '+score,180,15); saveScore('Street Dunk Duel', score);
+  },16);
+}
+
+// Bobble Soccer Stars (original)
+let socInt;
+function startSoccer(){
+  const c=document.getElementById('soccer'); const x=c.getContext('2d');
+  let p=80,ai=80,bx=130,by=80,dx=2,dy=1;
+  c.onmousemove=e=>{const r=c.getBoundingClientRect(); p=e.clientY-r.top;}
+  clearInterval(socInt);
+  socInt=setInterval(()=>{
+    x.clearRect(0,0,c.width,c.height);
+    by+=dy; bx+=dx;
+    if(by<0||by>160)dy*=-1;
+    if(bx<20&&Math.abs(by-p)<20)dx*=-1;
+    if(bx>240&&Math.abs(by-ai)<20)dx*=-1;
+    ai+=((by-ai)*0.05);
+    x.beginPath(); x.arc(15,p,14,0,7); x.arc(245,ai,14,0,7); x.fill();
+    x.beginPath(); x.arc(bx,by,5,0,7); x.fill();
+    if(bx<0||bx>260){bx=130;by=80}
+  },16);
+}
+
+// Reaction Test
+let reactionTime;
+function reactionStart() {
+  const result = document.getElementById('reactionResult');
+  result.innerText = 'Wait for green...';
+  const delay = Math.random() * 3000 + 1000;
+  setTimeout(() => {
+    reactionTime = Date.now();
+    document.body.style.background = '#16a34a';
+    document.body.onclick = () => {
+      const time = Date.now() - reactionTime;
+      result.innerText = 'Your reaction time: ' + time + ' ms';
+      document.body.style.background = '#0f172a';
+      document.body.onclick = null;
+    };
+  }, delay);
+}
+
+// Click Rush
+let clickScore = 0;
+let clickActive = false;
+function startClickRush(){document.getElementById('clickSound').play();() {
+  clickScore = 0;
+  clickActive = true;
+  document.getElementById('clickScore').innerText = 'Score: 0';
+  const btn = document.createElement('button');
+  btn.innerText = 'CLICK!';
+  btn.onclick = () => {
+    if (clickActive) {
+      clickScore++;
+      document.getElementById('clickScore').innerText = 'Score: ' + clickScore;
+    }
+  };
+  document.querySelector('.card').appendChild(btn);
+  setTimeout(() => {
+    clickActive = false;
+    btn.remove();
+    alert('Time! Final score: '+clickScore); saveScore('Click Rush', clickScore);
+  }, 10000);
+}
+
+// Number Guess
+const secret = Math.floor(Math.random() * 100) + 1;
+function checkGuess() {
+  const val = Number(document.getElementById('guessInput').value);
+  const result = document.getElementById('guessResult');
+  if (val === secret) result.innerText = '🎉 Correct!';
+  else if (val > secret) result.innerText = 'Too high!';
+  else result.innerText = 'Too low!';
+}
+
+// Mini Pong
+let pongInterval;
+function startPong() {
+  const canvas = document.getElementById('pong');
+  const ctx = canvas.getContext('2d');
+  let paddleY = canvas.height / 2 - 20;
+  let ballX = canvas.width / 2;
+  let ballY = canvas.height / 2;
+  let dx = 2, dy = 2;
+
+  canvas.onmousemove = e => {
+    const rect = canvas.getBoundingClientRect();
+    paddleY = e.clientY - rect.top - 20;
+  };
+
+  clearInterval(pongInterval);
+  pongInterval = setInterval(() => {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillRect(10, paddleY, 6, 40);
+    ctx.beginPath();
+    ctx.arc(ballX, ballY, 4, 0, Math.PI*2);
+    ctx.fill();
+    ballX += dx; ballY += dy;
+    if (ballY < 0 || ballY > canvas.height) dy *= -1;
+    if (ballX < 16 && ballY > paddleY && ballY < paddleY + 40) dx *= -1;
+    if (ballX > canvas.width) { ballX = canvas.width/2; }
+  }, 16);
+}
+</script>
+</body>
+</html>
